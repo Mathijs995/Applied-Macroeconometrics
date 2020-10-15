@@ -1,37 +1,23 @@
----
+# worker-spec.yml
 
-scheduler:
-  name: scheduler
-  image:
-    repository: "dask/dask"
-    tag: 2.27.0
-    pullPolicy: IfNotPresent
-  replicas: 1
-  serviceType: "LoadBalancer"
-  servicePort: 8786
-
-webUI:
-  name: webui
-  servicePort: 80
-
-worker:
-  name: worker
-  image:
-    repository: "dask/dask"
-    tag: 2.27.0
-    pullPolicy: IfNotPresent
-    dask_worker: "dask-worker"
-  replicas: 3
-  
-jupyter:
-  name: jupyter
-  enabled: true
-  rbac: true
-  image:
-    repository: "dask/dask-notebook"
-    tag: 2.27.0
-    pullPolicy: IfNotPresent
-  replicas: 1 
-  serviceType: "LoadBalancer"
-  servicePort: 80
-  password: "argon2:$argon2id$v=19$m=10240,t=10,p=8$0dielwjyaP6pPT4ftaQ+Ig$lA23nPwIyypXhOn8m5ujBw"
+kind: Pod
+metadata:
+  labels:
+    foo: bar
+spec:
+  restartPolicy: Never
+  containers:
+  - image: daskdev/dask:latest
+    imagePullPolicy: IfNotPresent
+    args: [dask-worker, --nthreads, '2', --no-dashboard, --memory-limit, 6GB, --death-timeout, '60']
+    name: dask
+    env:
+      - name: EXTRA_PIP_PACKAGES
+        value: git+https://github.com/dask/distributed
+    resources:
+      limits:
+        cpu: "2"
+        memory: 6G
+      requests:
+        cpu: "2"
+        memory: 6G
