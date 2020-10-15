@@ -1,0 +1,37 @@
+---
+
+scheduler:
+  name: scheduler
+  image:
+    repository: "dask/dask"
+    tag: 2.27.0
+    pullPolicy: IfNotPresent
+  replicas: 1
+  serviceType: "LoadBalancer"
+  servicePort: 8786
+
+webUI:
+  name: webui
+  servicePort: 80
+
+worker:
+  name: worker
+  image:
+    repository: "dask/dask"
+    tag: 2.27.0
+    pullPolicy: IfNotPresent
+    dask_worker: "dask-worker"
+  replicas: 3
+  
+jupyter:
+  name: jupyter
+  enabled: true
+  rbac: true
+  image:
+    repository: "dask/dask-notebook"
+    tag: 2.27.0
+    pullPolicy: IfNotPresent
+  replicas: 1 
+  serviceType: "LoadBalancer"
+  servicePort: 80
+  password: "argon2:$argon2id$v=19$m=10240,t=10,p=8$0dielwjyaP6pPT4ftaQ+Ig$lA23nPwIyypXhOn8m5ujBw"
