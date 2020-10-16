@@ -61,6 +61,10 @@ worker:
     - name: EXTRA_PIP_PACKAGES
       value: pandas numpy scikit-learn --upgrade
   resources: {}  # Worker pod resources. See `values.yaml` for example values.
+    limits:
+      cpu: "1"
+    requests:
+      cpu: 940m
   #  limits:
   #    cpu: 1
   #    memory: 3G
