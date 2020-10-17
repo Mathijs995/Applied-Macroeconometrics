@@ -43,7 +43,7 @@ worker:
     dask_worker: "dask-worker"  # Dask worker command. E.g `dask-cuda-worker` for GPU worker.
     pullSecrets:  # Container image [pull secrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/).
     #  - name: regcred
-  replicas: 8  # Number of workers.
+  replicas: 24  # Number of workers.
 #   default_resources:  # overwritten by resource limits if they exist
 #     cpu: 1  # Default CPU (DEPRECATED use `resources`).
 #     memory: "1GiB"  # Default memory (DEPRECATED use `resources`).
