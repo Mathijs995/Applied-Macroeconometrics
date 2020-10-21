@@ -1,0 +1,36 @@
+scheduler:
+  name: scheduler
+  image:
+    repository: "daskdev/dask"
+    tag: 2.27.0
+    pullPolicy: IfNotPresent
+    pullSecrets:
+  replicas: 1
+  serviceType: "LoadBalancer"
+
+webUI:
+  name: webui
+  servicePort: 80
+  ingress:
+    enabled: false
+    tls: false
+    hostname: dask-ui.example.com
+
+worker:
+  name: worker
+  image:
+    repository: "daskdev/dask"
+    tag: 2.27.0
+    pullPolicy: IfNotPresent
+    dask_worker: "dask-worker"
+  default_resources:
+    cpu: "940m"
+    memory: "1GiB"
+  replicas: 5
+  env:
+    - name: EXTRA_CONDA_PACKAGES
+      value: scikit-learn -c conda-forge --update-all
+     
+jupyter:
+  name: jupyter
+  enabled: false
